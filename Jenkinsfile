@@ -9,16 +9,26 @@ pipeline {
     stage('Configure Environment') {
       steps {
         container(name: 'aws', shell: '/bin/bash') {
-          withAWS(credentials: 'ansible', region: 'us-east-1') {
-            sh '''
-              aws --version
-              aws iam get-user
-              
-              aws ec2 create-key-pair --key-name ansibleKey
-              
-              ls -l
-              ls -l /home
-            '''
+          withCredentials([[
+            $class: 'AmazonWebServicesCredentialsBinding',
+            credentialsId: "ansible",
+            accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+            secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+            ]]) {
+                sh '''
+                export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+                export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+                export AWS_DEFAULT_REGION=us-east-1
+
+                aws --version
+                aws iam get-user
+
+                aws ec2 create-key-pair --key-name ansibleKey
+                
+                ls -l
+                ls -l /home
+              '''
+            }
           }
         }
       }
