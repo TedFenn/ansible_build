@@ -9,9 +9,12 @@ pipeline {
     stage('Configure Environment') {
       steps {
         container(name: 'aws', shell: '/bin/bash') {
-          sh '''
-            aws --version
-          '''
+          withAWS(credentials: 'aws-credentials', region: 'us-east-1') {
+            sh '''
+              aws --version
+              aws iam get-user
+            '''
+          }
         }
       }
     }
