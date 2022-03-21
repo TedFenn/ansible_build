@@ -1,0 +1,13 @@
+kind: Pod
+metadata:
+  name: kaniko
+spec:
+  containers:
+  - name: aws
+    image: tfenn/awscli:1.0
+    imagePullPolicy: Always
+    command:
+    - sleep
+    args:
+    - infinity
+    tty: true
