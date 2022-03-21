@@ -6,10 +6,19 @@ pipeline {
     }
   }
   stages {
-    stage('AWS Image') {
+    stage('Configure Environment') {
       steps {
         container(name: 'aws', shell: '/bin/bash') {
-          sh '''#!/busybox/sh
+          sh '''
+            echo 'hello'
+          '''
+        }
+      }
+    }
+    stage('Setup Environment') {
+      steps {
+        container(name: 'ansible', shell: '/bin/bash') {
+          sh '''
             echo 'hello'
           '''
         }
