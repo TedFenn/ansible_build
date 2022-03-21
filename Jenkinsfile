@@ -10,7 +10,7 @@ pipeline {
       steps {
         container(name: 'aws', shell: '/bin/bash') {
           sh '''
-            echo 'hello'
+            aws -version
           '''
         }
       }
@@ -19,7 +19,7 @@ pipeline {
       steps {
         container(name: 'ansible', shell: '/bin/bash') {
           sh '''
-            echo 'hello'
+            python -m pip --version
           '''
         }
       }
