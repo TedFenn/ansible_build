@@ -10,7 +10,7 @@ pipeline {
       steps {
         container(name: 'aws', shell: '/bin/bash') {
           sh '''
-            aws -version
+            aws --version
           '''
         }
       }
