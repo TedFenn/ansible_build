@@ -14,7 +14,8 @@ pipeline {
               aws --version
               aws ec2 create-key-pair --key-name ansible-pair
               aws iam get-user
-              ls
+              ls -l
+              ls -l /home
             '''
           }
         }
