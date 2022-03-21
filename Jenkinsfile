@@ -12,7 +12,9 @@ pipeline {
           withAWS(credentials: 'aws-credentials', region: 'us-east-1') {
             sh '''
               aws --version
+              aws ec2 create-key-pair --key-name ansible-pair
               aws iam get-user
+              ls
             '''
           }
         }
