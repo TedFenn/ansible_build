@@ -50,7 +50,14 @@ pipeline {
 
                 aws cloudformation describe-stacks --stack-name ${globalStackName}
 
-                aws ec2 describe-instances
+                aws cloudformation describe-stacks --stack-name ${globalStackName} --query 'Stacks[0].Outputs[0].OutputValue' --output text > web1.txt
+                aws cloudformation describe-stacks --stack-name ${globalStackName} --query 'Stacks[0].Outputs[1].OutputValue' --output text > web2.txt
+                aws cloudformation describe-stacks --stack-name ${globalStackName} --query 'Stacks[0].Outputs[2].OutputValue' --output text > lb.txt
+                aws cloudformation describe-stacks --stack-name ${globalStackName} --query 'Stacks[0].Outputs[3].OutputValue' --output text > dns.txt
+                
+
+
+                #aws ec2 describe-instances
                 
               """
           }
