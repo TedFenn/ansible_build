@@ -76,17 +76,17 @@ pipeline {
             app2=`cat web2.txt`
             lb=`cat lb.txt`
 
-            `cat <<EOT >> hosts-dev
-            [webservers]
-            app1 ansible_host=\$app1
-            app2 ansible_host=\$app2
+`cat <<EOT >> hosts-dev
+[webservers]
+app1 ansible_host=\$app1
+app2 ansible_host=\$app2
 
-            [loadbalancers]
-            lb1 ansible_host=\$lb
+[loadbalancers]
+lb1 ansible_host=\$lb
 
-            [local]
-            control ansible_connection=local
-            EOT`
+[local]
+control ansible_connection=local
+EOT`
 
             cp ${gloablKeyPairName}.pem ./ansible/${gloablKeyPairName}.pem
             cp hosts-dev ./ansible/hosts-dev
