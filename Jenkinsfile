@@ -1,5 +1,5 @@
-def globalStackName="cfAnsible3"
-def gloablKeyPairName="ansible3"
+def globalStackName="cfAnsible4"
+def gloablKeyPairName="ansible4"
 
 pipeline {
   agent {
@@ -36,7 +36,10 @@ pipeline {
 
                 stackId=`cat stackId.txt`
                 
-                aws cloudformation describe-stacks --stack-name ${globalStackName}
+                aws cloudformation describe-stacks --stack-name ${globalStackName} --query 'Stacks[0].StackStatus' --output text > stackStatus.txt
+
+                cat stackId.txt
+                stackStatus=`cat stackId.txt`
 
                 ls -l
                 
