@@ -1,5 +1,5 @@
-def globalStackName="cfAnsible5"
-def gloablKeyPairName="ansible5"
+def globalStackName="cfAnsible6"
+def gloablKeyPairName="ansible6"
 
 pipeline {
   agent {
@@ -35,11 +35,18 @@ pipeline {
                 aws cloudformation create-stack --stack-name ${globalStackName} --template-body file://setup-env.yaml  --parameters ParameterKey=NameOfService,ParameterValue=ansibleServiceStack ParameterKey=KeyName,ParameterValue=ansible --query 'StackId' --output text > stackId.txt
 
                 stackId=`cat stackId.txt`
-                
-                aws cloudformation describe-stacks --stack-name ${globalStackName} --query 'Stacks[0].StackStatus' --output text > stackStatus.txt
 
-                cat stackStatus.txt
-                stackStatus=`cat stackStatus.txt`
+                stackStatus=CREATE_IN_PROGRESS
+
+                while [ $stackStatus == "CREATE_IN_PROGRESS" ]
+                do
+                  sleep 5
+
+                  aws cloudformation describe-stacks --stack-name ${globalStackName} --query 'Stacks[0].StackStatus' --output text > stackStatus.txt
+                  cat stackStatus.txt
+                  stackStatus=`cat stackStatus.txt`
+                  
+                done
 
                 ls -l
                 
