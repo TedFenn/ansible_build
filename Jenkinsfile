@@ -1,3 +1,6 @@
+def globalStackName="cfAnsible2"
+def gloablKeyPairName="ansible2"
+
 pipeline {
   agent {
     kubernetes {
@@ -15,29 +18,29 @@ pipeline {
             accessKeyVariable: 'AWS_ACCESS_KEY_ID',
             secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
             ]]) {
-                sh '''
-                export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
-                export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+                sh """
+                export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+                export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
                 export AWS_DEFAULT_REGION=us-east-1
 
                 aws --version
                 aws iam get-user
 
                 #generation of key pair
-                aws ec2 create-key-pair --key-name ansible --query 'KeyMaterial' --output text > ansible.pem
-                chmod 640 ansible.pem
+                aws ec2 create-key-pair --key-name ${gloablKeyPairName} --query 'KeyMaterial' --output text > ${gloablKeyPairName}.pem
+                chmod 640 ${gloablKeyPairName}.pem
 
                 cp ./aws/setup-env.yaml setup-env.yaml
 
-                aws cloudformation create-stack --stack-name cfAnsible1 --template-body file://setup-env.yaml  --parameters ParameterKey=NameOfService,ParameterValue=ansibleServiceStack ParameterKey=KeyName,ParameterValue=ansible --query 'StackId' --output text > stackId.txt
+                aws cloudformation create-stack --stack-name ${globalStackName} --template-body file://setup-env.yaml  --parameters ParameterKey=NameOfService,ParameterValue=ansibleServiceStack ParameterKey=KeyName,ParameterValue=ansible --query 'StackId' --output text > stackId.txt
 
-                stackName=`cat stackId.txt`
+                stackId=`cat stackId.txt`
                 
-                aws describe-stacks --stack-name $stackName
+                aws describe-stacks --stack-name $gloablKeyPairName
 
                 ls -l
                 
-              '''
+              """
           }
         }
       }
