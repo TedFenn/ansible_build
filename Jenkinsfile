@@ -28,7 +28,7 @@ pipeline {
 
                 #generation of key pair
                 aws ec2 create-key-pair --key-name ${gloablKeyPairName} --query 'KeyMaterial' --output text > ${gloablKeyPairName}.pem
-                chmod 640 ${gloablKeyPairName}.pem
+                chmod 400 ${gloablKeyPairName}.pem
 
                 cp ./aws/setup-env.yaml setup-env.yaml
 
@@ -109,9 +109,20 @@ EOT`
           sh '''
             pwd
             cd ./ansible
+            chmod 400 ${gloablKeyPairName}.pem
+
+            ls -lrt
+
             ansible-playbook playbooks/all-playbooks.yml
           '''
         }
+      }
+    }
+  }
+  post {
+    failure {
+      container(name: 'ansible', shell: '/bin/bash') {
+        sh "test"
       }
     }
   } 
