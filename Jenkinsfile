@@ -28,7 +28,7 @@ pipeline {
 
                 #generation of key pair
                 aws ec2 create-key-pair --key-name ${gloablKeyPairName} --query 'KeyMaterial' --output text > ${gloablKeyPairName}.pem
-                chmod 660 ${gloablKeyPairName}.pem
+                chmod 400 ${gloablKeyPairName}.pem
 
                 cp ./aws/setup-env.yaml setup-env.yaml
 
@@ -114,6 +114,16 @@ EOT`
             chmod 400 ${gloablKeyPairName}.pem
 
             ansible-playbook playbooks/all-playbooks.yml
+          """
+        }
+      }
+    }
+    stage('Access Details') {
+      steps {
+        container(name: 'ansible', shell: '/bin/bash') {
+          sh """
+                echo "The webservers are running at `cat web1.txt` and `cat web2.txt`!"
+                echo "The DNS name is `cat dns.txt`!"
           """
         }
       }
