@@ -30,6 +30,8 @@ pipeline {
                 cp ./aws/setup-env.yaml setup-env.yaml
 
                 aws cloudformation create-stack --stack-name cfAnsible --template-body file://setup-env.yaml  --parameters ParameterKey=ansible
+
+                cat stackId.txt
                 
                 ls -l
                 
