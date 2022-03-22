@@ -1,5 +1,5 @@
-def globalStackName="cfAnsible6"
-def gloablKeyPairName="ansible6"
+def globalStackName="cfAnsible1"
+def gloablKeyPairName="ansible1"
 
 pipeline {
   agent {
@@ -32,7 +32,7 @@ pipeline {
 
                 cp ./aws/setup-env.yaml setup-env.yaml
 
-                aws cloudformation create-stack --stack-name ${globalStackName} --template-body file://setup-env.yaml  --parameters ParameterKey=NameOfService,ParameterValue=ansibleServiceStack ParameterKey=KeyName,ParameterValue=ansible --query 'StackId' --output text > stackId.txt
+                aws cloudformation create-stack --stack-name ${globalStackName} --template-body file://setup-env.yaml  --parameters ParameterKey=NameOfService,ParameterValue=ansibleServiceStack ParameterKey=KeyName,ParameterValue=${gloablKeyPairName} --query 'StackId' --output text > stackId.txt
 
                 stackId=`cat stackId.txt`
 
