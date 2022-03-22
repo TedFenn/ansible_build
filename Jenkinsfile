@@ -76,7 +76,7 @@ pipeline {
             app2=`cat web2.txt`
             lb=`cat lb.txt`
 
-            cat <<EOT >> hosts-dev
+            `cat <<EOT >> hosts-dev
             [webservers]
             app1 ansible_host=\$app1
             app2 ansible_host=\$app2
@@ -86,7 +86,7 @@ pipeline {
 
             [local]
             control ansible_connection=local
-            EOT
+            EOT`
 
             cp ${gloablKeyPairName}.pem ./ansible/${gloablKeyPairName}.pem
             cp hosts-dev ./ansible/hosts-dev
@@ -98,6 +98,8 @@ pipeline {
             cat hosts-dev
 
             ssh -y -i ec2-user@\$app1
+            whoami
+            exit
 
           """
         }
