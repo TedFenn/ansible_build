@@ -1,5 +1,5 @@
-def globalStackName="cfAnsible1"
-def gloablKeyPairName="ansible1"
+def globalStackName="cfAnsible2"
+def gloablKeyPairName="ansible2"
 
 pipeline {
   agent {
@@ -40,7 +40,7 @@ pipeline {
 
                 while [ \$stackStatus == "CREATE_IN_PROGRESS" ]
                 do
-                  sleep 5
+                  sleep 15
 
                   aws cloudformation describe-stacks --stack-name ${globalStackName} --query 'Stacks[0].StackStatus' --output text > stackStatus.txt
                   cat stackStatus.txt
@@ -48,7 +48,7 @@ pipeline {
                   
                 done
 
-                ls -l
+                aws cloudformation describe-stacks --stack-name ${globalStackName}
                 
               """
           }
