@@ -1,5 +1,5 @@
-def globalStackName="cfAnsible2"
-def gloablKeyPairName="ansible2"
+def globalStackName="cfAnsible"
+def gloablKeyPairName="ansible"
 
 pipeline {
   agent {
@@ -65,6 +65,41 @@ pipeline {
                 
               """
           }
+        }
+      }
+    }
+    stage{'generate control and setup control files'} {
+      steps {
+        container(name: 'ansible', shell: '/bin/bash') {
+          sh """
+            app1=`cat web1.txt`
+            app2=`cat web2.txt`
+            lb=`cat lb.txt`
+
+            cat <<EOT >> hosts-dev
+            [webservers]
+            app1 ansible_host=\$app1
+            app2 ansible_host=\$app2
+
+            [loadbalancers]
+            lb1 ansible_host=\$lb
+
+            [local]
+            control ansible_connection=local
+            EOT
+
+            cp ${gloablKeyPairName}.pem ./ansible/${gloablKeyPairName}.pem
+            cp hosts-dev ./ansible/hosts-dev
+
+            cd ./ansible
+
+            ls -lrt
+
+            cat hosts-dev
+
+            ssh -y -i ec2-user@\$app1
+
+          """
         }
       }
     }
