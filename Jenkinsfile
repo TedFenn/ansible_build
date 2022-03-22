@@ -68,7 +68,7 @@ pipeline {
         }
       }
     }
-    stage{'generate control and setup control files'} {
+    stage('generate control and setup control files') {
       steps {
         container(name: 'ansible', shell: '/bin/bash') {
           sh """
