@@ -122,8 +122,8 @@ EOT`
       steps {
         container(name: 'ansible', shell: '/bin/bash') {
           sh """
-                echo "The webservers are running at `cat web1.txt` and `cat web2.txt`!"
-                echo "The DNS name is `cat dns.txt`!"
+                echo "The webservers are running at `cat web1.txt`:80 and `cat web2.txt`:80"
+                echo "The DNS name is `cat dns.txt`"
           """
         }
       }
