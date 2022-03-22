@@ -23,7 +23,13 @@ pipeline {
                 aws --version
                 aws iam get-user
 
-                aws ec2 create-key-pair --key-name ansible --query 'KeyMaterial' --output text > ansible.pem
+                #generation of key pair
+                aws ec2 create-key-pair --key-name ansible --query 'KeyMaterial' --output text > ansible
+                chmod 640 ansible.pem
+
+                cp ./aws/setup-env.yaml setup-env.yaml
+
+                aws cloudformation create-stack --stack-name ansible_stack --template-body file://setup-env.yaml  --parameters ParameterKey=ansible
                 
                 ls -l
                 
