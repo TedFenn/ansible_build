@@ -1,0 +1,10 @@
+---
+  - hosts: loadbalancers
+    tasks:
+    - name: Config port number
+      lineinfile: path=/etc/config.cfg regexp='^port' line='port=80'
+      notify: Restart Apache
+  
+  handlers:
+    - name: restart Apache
+      service: name=httpd status=restarted

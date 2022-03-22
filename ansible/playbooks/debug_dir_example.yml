@@ -1,0 +1,13 @@
+
+---
+  vars:
+    path_to_app: "/var/www/html"
+
+  tasks:
+    - name: see dir contents
+      command: ls -la {{ path_to_app }}
+      register: dir_contents
+
+    - name: debug directory contents
+      debug:
+        msg: "{{ dir_contents }}"

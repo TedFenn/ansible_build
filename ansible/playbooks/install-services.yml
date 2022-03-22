@@ -1,0 +1,21 @@
+
+---
+  - hosts: loadbalancers
+    become: true
+    tasks:
+      - name: installing Apache
+        yum: name=httpd state=present
+      - name: Ensure apache starts
+        service: name=httpd state=started enabled=yes
+
+  - hosts: webservers
+    become: true
+    tasks:
+      - name: installing webservers
+        yum:
+          name:
+            - httpd
+            - php
+          state: present
+      - name: Ensure apache starts
+        service: name=httpd state=started enabled=yes

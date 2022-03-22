@@ -1,0 +1,7 @@
+# adhoc cmd ansible -m service -a "name=httpd state=stopped" --become loadbalancers
+---
+  - hosts: webservers:loadbalancers
+    become: true
+    tasks:
+      - name: check the status
+        command: service httpd status
