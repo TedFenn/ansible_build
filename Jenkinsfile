@@ -92,14 +92,12 @@ pipeline {
             cp hosts-dev ./ansible/hosts-dev
 
             cd ./ansible
-
             ls -lrt
-
             cat hosts-dev
 
-            ssh -y -i ec2-user@\$app1
-            whoami
-            exit
+            #ssh -y -i ec2-user@\$app1
+            #whoami
+            #exit
 
           """
         }
@@ -109,7 +107,9 @@ pipeline {
       steps {
         container(name: 'ansible', shell: '/bin/bash') {
           sh '''
-            python -m pip --version
+            pwd
+            cd ./ansible
+            ansible-playbook playbooks/all-playbooks.yml
           '''
         }
       }
