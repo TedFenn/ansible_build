@@ -24,7 +24,7 @@ pipeline {
                 aws iam get-user
 
                 #generation of key pair
-                aws ec2 create-key-pair --key-name ansible --query 'KeyMaterial' --output text > ansible
+                aws ec2 create-key-pair --key-name ansible --query 'KeyMaterial' --output text > ansible.pem
                 chmod 640 ansible.pem
 
                 cp ./aws/setup-env.yaml setup-env.yaml
