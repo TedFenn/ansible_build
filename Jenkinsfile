@@ -36,7 +36,7 @@ pipeline {
 
                 stackId=`cat stackId.txt`
                 
-                aws describe-stacks --stack-name $gloablKeyPairName
+                aws cloudformation describe-stacks --stack-name ${globalStackName}
 
                 ls -l
                 
