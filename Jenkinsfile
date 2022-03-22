@@ -1,5 +1,5 @@
-def globalStackName="cfAnsible4"
-def gloablKeyPairName="ansible4"
+def globalStackName="cfAnsible5"
+def gloablKeyPairName="ansible5"
 
 pipeline {
   agent {
