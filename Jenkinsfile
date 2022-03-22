@@ -55,6 +55,10 @@ pipeline {
                 aws cloudformation describe-stacks --stack-name ${globalStackName} --query 'Stacks[0].Outputs[2].OutputValue' --output text > lb.txt
                 aws cloudformation describe-stacks --stack-name ${globalStackName} --query 'Stacks[0].Outputs[3].OutputValue' --output text > dns.txt
                 
+                cat web1.txt
+                cat web2.txt
+                cat lb.txt
+                cat dns.txt
 
 
                 #aws ec2 describe-instances
