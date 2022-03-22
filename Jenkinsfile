@@ -23,7 +23,7 @@ pipeline {
                 aws --version
                 aws iam get-user
 
-                aws ec2 create-key-pair --key-name ansibleKey --query 'KeyMaterial' --output text > ansibleKey.pem
+                aws ec2 create-key-pair --key-name ansible --query 'KeyMaterial' --output text > ansible.pem
                 
                 ls -l
                 
