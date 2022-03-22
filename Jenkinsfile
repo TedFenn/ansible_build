@@ -28,7 +28,7 @@ pipeline {
 
                 #generation of key pair
                 aws ec2 create-key-pair --key-name ${gloablKeyPairName} --query 'KeyMaterial' --output text > ${gloablKeyPairName}.pem
-                chmod 660 ${gloablKeyPairName}.pem
+                chmod 400 ${gloablKeyPairName}.pem
 
                 cp ./aws/setup-env.yaml setup-env.yaml
 
