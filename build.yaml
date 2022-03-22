@@ -13,7 +13,7 @@ spec:
     - infinity
     tty: true
   - name: ansible
-    image: tfenn/ansiblecli:2.0
+    image: tfenn/ansible:2.0
     imagePullPolicy: Always
     command:
     - sleep
