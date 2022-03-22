@@ -29,12 +29,12 @@ pipeline {
 
                 cp ./aws/setup-env.yaml setup-env.yaml
 
-                aws cloudformation create-stack --stack-name cfAnsible --template-body file://setup-env.yaml  --parameters ParameterKey=NameOfService,ParameterValue=ansibleServiceStack ParameterKey=KeyName,ParameterValue=ansible --query 'StackId' --output text > stackId.txt
+                aws cloudformation create-stack --stack-name cfAnsible1 --template-body file://setup-env.yaml  --parameters ParameterKey=NameOfService,ParameterValue=ansibleServiceStack ParameterKey=KeyName,ParameterValue=ansible --query 'StackId' --output text > stackId.txt
 
                 stackName=`cat stackId.txt`
                 
                 aws describe-stacks --stack-name $stackName
-                
+
                 ls -l
                 
               '''
