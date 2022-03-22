@@ -38,8 +38,8 @@ pipeline {
                 
                 aws cloudformation describe-stacks --stack-name ${globalStackName} --query 'Stacks[0].StackStatus' --output text > stackStatus.txt
 
-                cat stackId.txt
-                stackStatus=`cat stackId.txt`
+                cat stackStatus.txt
+                stackStatus=`cat stackStatus.txt`
 
                 ls -l
                 
