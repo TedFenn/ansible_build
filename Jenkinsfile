@@ -38,7 +38,7 @@ pipeline {
 
                 stackStatus=CREATE_IN_PROGRESS
 
-                while [ $stackStatus == "CREATE_IN_PROGRESS" ]
+                while [ \$stackStatus == "CREATE_IN_PROGRESS" ]
                 do
                   sleep 5
 
