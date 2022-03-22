@@ -106,7 +106,7 @@ EOT`
     stage('Setup Environment') {
       steps {
         container(name: 'ansible', shell: '/bin/bash') {
-          sh '''
+          sh """
             pwd
             cd ./ansible
             ls -lrt
@@ -114,7 +114,7 @@ EOT`
             chmod 400 ${gloablKeyPairName}.pem
 
             ansible-playbook playbooks/all-playbooks.yml
-          '''
+          """
         }
       }
     }
